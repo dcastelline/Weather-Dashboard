@@ -1,0 +1,14 @@
+.jumbotron {
+    background-color: lightblue;
+    width: 100vw;
+    height: 100px;
+    color: purple;
+    justify-content: center;
+    text-align: center
+}
+
+.container {
+    background-color: lightgray;
+    float: left;
+    width: 100vw;
+}
