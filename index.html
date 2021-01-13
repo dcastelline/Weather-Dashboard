@@ -23,27 +23,23 @@
             <!-- Search input field -->
             <div class="row">
                 <div class="col-md-3">
-                    <form action="search">
-                        <label for="search-field" class="search-label">Check the Weather in:</label>
-                        <input type="text" class="search-input">
-                        <button id="searchBtn" class="searchBtn">Check</button>
-                    </form>
+                    <label for="search-field" class="search-label">Check the Weather in:</label>
+                    <input type="text" class="search-input">
+                    <button id="searchBtn" type= "submit" class="searchBtn">Check</button>
                 </div>
-            </div>
-            <!-- Cities searched and returned -->
-            <div class="retuns">
-                <textarea name="cities-returned" id="returnBlock" cols="1" rows="5">
-
-                </textarea>
-            </div>
-            <!-- Currently selected city -->
-            <div class="current-city">
-                <div class="current">
-
+                <!-- Cities searched and returned -->
+                <div id="returns" class="retuns">
+                
                 </div>
-                <!-- Five day forecast -->
-                <div class="forecast">
+                <!-- Currently selected city -->
+                <div class="current-city col-md-9">
+                    <div id="weather-card" class="card">
 
+                    </div>
+                    <!-- Five day forecast -->
+                    <div id="forecast-card" class="card">
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,7 +47,8 @@
 
         </div>
         <!-- jQuery CDN -->
-        <script href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="script.js" type="javascript"></script>
     </body>
 
 </html>
