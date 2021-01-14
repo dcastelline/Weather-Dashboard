@@ -1,8 +1,4 @@
 // // Possible needed variables
-//     // search input
-//     var searches = "";
-//     // saved cities
-//     var returns = "";
 //     // current city display
 //     var currCity = "";
 //     // 5 day forecast
@@ -14,12 +10,29 @@
     // // URL for AJAX
     // var queryURL = "";
 
+// saved cities
+var returns = [];
+
 $(document).ready(function() {
     console.log("ready");
   
-    $("#searchBtn").on("click", function(event) {
+    $("#submit").submit( function(event) {
         event.preventDefault();
         console.log("search");
        
-    })
-})
+        // var searchInput = $(".search-input").val().trim();
+        // console.log(searchInput);
+        // if (searchInput === "") {
+        //     alert("Oops! Please enter a city name to check the weather.")
+        // } else if (returns.length <= 5) {
+        //     returns.shift();
+        //     returns.push(searchInput.val().trim());
+        //     console.log(searchInput);
+        //     };
+        
+            // $.ajax(
+                
+            // )
+        });
+
+    });
