@@ -1,14 +1,20 @@
+/* Header */
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: purple;
+    justify-content: center;
+}
+
+/* Header container */
 .jumbotron {
     background-color: lightblue;
     width: 100vw;
     height: 100px;
-    color: purple;
-    justify-content: center;
-    text-align: center
 }
 
+/* Weather search and result display box */
 .container {
     background-color: lightgray;
-    float: left;
     width: 100vw;
 }
