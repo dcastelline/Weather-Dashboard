@@ -16,19 +16,18 @@ var returns = [];
 $(document).ready(function() {
     console.log("ready");
   
-    $("#submit").submit( function(event) {
+    $("form").submit(function(event) {
         event.preventDefault();
         console.log("search");
        
-        // var searchInput = $(".search-input").val().trim();
-        // console.log(searchInput);
-        // if (searchInput === "") {
-        //     alert("Oops! Please enter a city name to check the weather.")
-        // } else if (returns.length <= 5) {
-        //     returns.shift();
-        //     returns.push(searchInput.val().trim());
-        //     console.log(searchInput);
-        //     };
+        var searchInput = $(".search-field").val();
+        if (searchInput === "") {
+            alert("Oops! Please enter a city name to check the weather.")
+        } else if (returns.length <= 5) {
+            returns.shift();
+            returns.push(searchInput);
+            console.log(searchInput);
+            };
         
             // $.ajax(
                 
