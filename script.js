@@ -1,4 +1,5 @@
-var searchedCity = [];
+var returns = [];
+var searchedCity = $("#search-field").text();
 
 // Ready function
 $(document).ready(function() {
@@ -69,35 +70,28 @@ $(document).ready(function() {
         });
     
     // Weather AJAX call
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?id=524901&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef"
     var call = $.ajax({
-        url: "https://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "&units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        url: queryURL,
         method: "GET",
     });
+        console.log(call);
 
-    // Getting weather elements to display on page
+    // // Getting weather elements to display on page
     var currWeather = $("#weather-card");
     var date = new Date();
     var fullDate = (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
-    var getIcon = call.weather.icon;
-    var showIcon = $("<img src=> alt='weather icon'");
     var checkCurrCity = $("<h4 class='card-body'>").text(checkCurrCity+" ("+fullDate+")");
     currWeather.append(checkCurrCity);
-    var checkTemp = call.main.temp;
     var thisCity = call.name;
-    var showTemp = $("<p class='weather-text'>").text("Temperature: " + checkTemp + "º F");
-    currWeather.append(showTemp);
-    var checkHumidity = call.main.humidity;
-    var showHumidity = $("<p class='weather-text'>").text("Humidity: " + checkHumidity + "%");
-    currWeather.append(showHumidity);
-    var checkWind = call.wind.speed.toFixed(0);
     var showWind = $("<p class='weather-text'>").text("Wind Speed: " + checkWind + "mph");
     currWeather.append(showWind);
-    var checkLong = call.coord.lon;
-    var checkLat = call.coord.lat;
+
 
     // Checking UV
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?id=524901&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef"
     var uvReturn = $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        url: queryURL,
         method: "GET",
     })
 
@@ -117,9 +111,10 @@ $(document).ready(function() {
         $("#weather-card").html(currWeather);
     })
 
-    // forecast AJAX call
+    // // forecast AJAX call
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?id=524901&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef"
     var call = $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        url: queryURL,
         method: "GET",
     })    
 
@@ -136,18 +131,12 @@ $(document).ready(function() {
             var fullDate = (date.getMonth()+1)+"/"+(date.getDate()+i+1)+"/"+date.getFullYear();
             var futureDate = $("<h6 class='forecast-title'>").text(fullDate);
             cardPanel.append(futureDate);
-            var getIcon = call.list[i].weather[0].icon;
+            var getIcon = call;
             console.log(getIcon);
-            var showIcon = $("<img src''");
-            cardPanel.append(showIcon);
-            var checkTemp = call.main.temp;
-            var showTemp = $("<p class='forecast-text'>").text("Temp: " + checkTemp + "º F");
-            cardPanel.append(showTemp);
-            var checkHumidity = call.list[i].main.humidity;
+            var checkHumidity = call;
             var showHumidity = $("<p class='forecast-text'>").text("Hum: " + checkHumidity + "%");
             cardPanel.append(showHumidity);
-            futurePanel.append(cardPanel);
-            showForecast.append(futurePanel);
+
         }
         $("#forecast-cards").html(forecast);
     
@@ -156,4 +145,4 @@ $(document).ready(function() {
         searchedCity = $(this).attr("data-name");
         showWeather();
         showForecast();
-    }
+    };
