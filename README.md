@@ -6,7 +6,7 @@ This weather dashboard was created to allow the user to search cities to see tha
 
 ### **Deployed Link**
 
-
+https://dcastelline.github.io/Weather-Dashboard/
 
 ### **Usage**
 
