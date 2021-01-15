@@ -1,21 +1,4 @@
-// // Possible needed variables
-//     // current city display
-//     var currCity = "";
-//     // 5 day forecast
-//     var fiveDay = "";
-//     // date
-//     var currDate = "";
-    // // submit button
-    // var searchBtn = "";
-    // // URL for AJAX
-    // var queryURL = "";
-
-// API key
-var apiKey = "0f0bc1c3fcb1960a5ade4fdb7f4a77ef"
-
-// Saved cities searched
-var returns = [];
-var searchedCities = $(".searched-cities");
+var searchedCity = [];
 
 // Ready function
 $(document).ready(function() {
@@ -23,13 +6,13 @@ $(document).ready(function() {
     
     //Display searched cities
     function searchedCities() {
-        returns.empty();
+        $(".searched-cities").empty();
         $("#search-field").val("");
         for (i = 0; i < returns.length; i++) {
             var a = $("<a>");
             a.addClass("searched-city");
             a.text(returns[i]);
-            returns.prepend(a);
+            $(".searched-cities").prepend(a);
 
         }
     };
@@ -55,28 +38,84 @@ $(document).ready(function() {
         }
     };
 
+    // Store search array
+    function setArray() {
+        localStorage.setItem("cities", JSON.stringify(returns));
+    };
+
+    // Store current search
+    function setCurrCity() {
+        localStorage.setItem("currentCity", JSON.stringify(searchedCity));
+    };
+
     // Submit event
     $("form").submit(function(event) {
         event.preventDefault();
-        var searchInput = $(".search-field").val().trim();
-        console.log(searchInput);
+        searchedCity = $(".search-field").val().trim();
         
-        if (searchInput === "") {
+        if (searchedCity === "") {
             alert("Oops! Please enter a city name to check the weather.")
-            } else if (returns.length <= 5) {
-                returns.push(searchInput);
-                console.log(returns);
-            } else if (returns.length > 5) {
-                returns.slice();
-                returns.push(searchInput);
+            } else if (returns.length >= 5) {
+                returns.shift();
+                returns.push(searchedCity);
+            } else {
+                returns.push(searchedCity);
             };
-
-            // Store city
-            localStorage.setItem("city", JSON.stringify(searchInput));
-            console.log(localStorage);
-        
-            //Check weather function
-            
+            setCurrCity();
+            setArray();
+            searchedCities();
+            showWeather();
+            showForecast();
         });
-
+    
+    // Weather AJAX call
+    var call = $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "&units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        method: "GET",
     });
+
+    // Getting weather elements to display on page
+    var currWeather = $("#weather-card");
+    var date = new Date();
+    var fullDate = (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
+    // var getIcon = call.weather.icon;
+    var showIcon = $("<img src=> alt='weather icon'");
+    var checkCurrCity = $("<h4 class='card-body'>").text(checkCurrCity+" ("+fullDate+")");
+    currWeather.append(checkCurrCity);
+    var checkTemp = call.main.temp.toFixed(1);
+    var thisCity = call.name;
+    var showTemp = $("<p class='weather-text'>").text("Temperature: " + checkTemp + "º F");
+    currWeather.append(showTemp);
+    var checkHumidity = call.main.humidity;
+    var showHumidity = $("<p class='weather-text'>").text("Humidity: " + checkHumidity + "%");
+    currWeather.append(showHumidity);
+    var checkWind = call.wind.speed.toFixed(0);
+    var showWind = $("<p class='weather-text'>").text("Wind Speed: " + checkWind + "mph");
+    currWeather.append(showWind);
+    var checkLong = call.coord.lon;
+    var checkLat = call.coord.lat;
+
+    // Checking UV
+    var uvReturn = $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        method: "GET",
+    })
+
+    var checkUVIndex = uvReturn.value;
+    var uvIndex = $("<span>");
+        if (checkUVIndex > 0 && checkUVIndex <= 2.99) {
+            uvIndex.addClass("favorable");
+        } else if (checkUVIndex >= 3 && checkUVIndex <= 5.99) {
+            uvIndex.addClass("moderate");
+        } else {
+            (checkUVIndex >=6);
+            uvIndex.addClass("severe");
+        }
+        uvIndex.text(checkUVIndex);
+        var showUVIndex = $("<p class='weather-text'>").text("UV Index: ");
+        uvIndex.append(showUVIndex);
+        $("#weather-card").html(currWeather);
+    })
+
+    var forecast = $("#forecast-card");
+    var 
