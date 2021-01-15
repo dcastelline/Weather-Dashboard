@@ -18,7 +18,7 @@ $(document).ready(function() {
     };
 
     // Pull Cities from local storage
-    function pullCities() {
+    function searchedCities() {
         var returnedCities = JSON.parse(localStorage.getItem("cities"));
 
         if (returnedCities !== null) {
@@ -78,11 +78,11 @@ $(document).ready(function() {
     var currWeather = $("#weather-card");
     var date = new Date();
     var fullDate = (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
-    // var getIcon = call.weather.icon;
+    var getIcon = call.weather.icon;
     var showIcon = $("<img src=> alt='weather icon'");
     var checkCurrCity = $("<h4 class='card-body'>").text(checkCurrCity+" ("+fullDate+")");
     currWeather.append(checkCurrCity);
-    var checkTemp = call.main.temp.toFixed(1);
+    var checkTemp = call.main.temp;
     var thisCity = call.name;
     var showTemp = $("<p class='weather-text'>").text("Temperature: " + checkTemp + "º F");
     currWeather.append(showTemp);
@@ -117,5 +117,43 @@ $(document).ready(function() {
         $("#weather-card").html(currWeather);
     })
 
-    var forecast = $("#forecast-card");
-    var 
+    // forecast AJAX call
+    var call = $.ajax({
+        url: "http://api.openweathermap.org/data/2.5/onecall?" + searchedCity + "units=imperial&appid=0f0bc1c3fcb1960a5ade4fdb7f4a77ef",
+        method: "GET",
+    })    
+
+        // Five Day forecasts
+        var forecast = $("#forecast-cards");
+        var fiveDayHeader = $("<h6 class='forecast-header'>").text("Five Day Forecast");
+        forecast.append(fiveDayHeader);
+        var showForecast = $("<div class='forecast-card'>");
+        forecast.append(showForecast);
+
+        for (i=0; i < 5; i++) {
+            var cardPanel = $("<div class='forecast-body'>");
+            var date = new Date();
+            var fullDate = (date.getMonth()+1)+"/"+(date.getDate()+i+1)+"/"+date.getFullYear();
+            var futureDate = $("<h6 class='forecast-title'>").text(fullDate);
+            cardPanel.append(futureDate);
+            var getIcon = call.list[i].weather[0].icon;
+            console.log(getIcon);
+            var showIcon = $("<img src''");
+            cardPanel.append(showIcon);
+            var checkTemp = call.main.temp;
+            var showTemp = $("<p class='forecast-text'>").text("Temp: " + checkTemp + "º F");
+            cardPanel.append(showTemp);
+            var checkHumidity = call.list[i].main.humidity;
+            var showHumidity = $("<p class='forecast-text'>").text("Hum: " + checkHumidity + "%");
+            cardPanel.append(showHumidity);
+            futurePanel.append(cardPanel);
+            showForecast.append(futurePanel);
+        }
+        $("#forecast-cards").html(forecast);
+    
+
+    function pastSearches() {
+        searchedCity = $(this).attr("data-name");
+        showWeather();
+        showForecast();
+    }
